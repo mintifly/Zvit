@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'booking/css/main.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="booking-container">
+    <h2>Book {{ room.name }}</h2>
+    <form class="booking-form" action="{% url 'book_room' room.id %}" method="POST">
+        {% csrf_token %}
+        <label for="guest_name">Name:</label>
+        <input type="text" id="guest_name" name="guest_name" required>
+
+        <label for="check_in">Check-in:</label>
+        <input type="date" id="check_in" name="check_in" required>
+
+        <label for="check_out">Check-out:</label>
+        <input type="date" id="check_out" name="check_out" required>
+
+        <button type="submit">Confirm Booking</button> <!-- Змінив тут -->
+    </form>
+    <a href="{% url 'room_list' room.hotel.id %}" class="back-btnr">Back to Rooms</a>
+</div>
+</body>
+</html>

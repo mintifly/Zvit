@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'booking/css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Booking Confirmation</h1>
+    </header>
+
+    <section class="confirmation-details">
+        <p>You have successfully booked room {{ room.number }} at {{ room.hotel.name }}.</p>
+        <p>Price per night: ${{ room.price_per_night }}</p>
+        <a href="{% url 'hotel_list' %}" class="back-button">Back to Hotels</a>
+    </section>
+</body>
+</html>

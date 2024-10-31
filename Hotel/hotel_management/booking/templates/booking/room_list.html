@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кімнати у {{ hotel.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'booking/css/main.css' %}">
+</head>
+<body>
+    <h2 class="section-title">Rooms</h2>
+    <div class="button-container">
+        <a href="{% url 'index' %}" class="back-btn">Go back to hotels</a>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+            {% else %}
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <ul class="room-list">
+        {% for room in rooms %}
+        <li class="room-item">
+            <img src="{{ room.image.url }}" alt="{{ room.name }}">
+            <p>Type: {{ room.room_type }}</p>
+            <p>Price: ${{ room.price_per_night }} per night</p>
+
+            {% if user.is_authenticated %}
+            <button class="book-btn"><a href="{% url 'book_room' room.id %}">Reserve</a></button>
+            {% else %}
+            <button class="book-btn disabled" disabled>Log in to Reserve</button>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

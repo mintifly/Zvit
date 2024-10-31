@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Готелі Львова</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'booking/css/main.css' %}">
+</head>
+<body>
+     <header class="header">
+        <div class="logo">
+            <img src="{% static 'booking/img/five-stars.png' %}" alt="">
+        </div>
+        <form action="{% url 'index' %}" method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Enter hotel name...">
+            <button type="submit">Search</button>
+        </form>
+        <div class="auth-buttons">
+        {% if user.is_authenticated %}
+            <span class="username">Welcome, {{ user.username }}!</span>
+            <form action="{% url 'logout_view' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        {% else %}
+            <button class="login-btn"><a href="{% url 'login_view' %}">Login</a></button>
+            <button class="register-btn"><a href="{% url 'register' %}">Register</a></button>
+        {% endif %}
+        </div>
+    </header>
+    <div class="hotel-list">
+        <h2>Best Hotels in Lviv</h2>
+        <ul>
+            {% for hotel in hotels %}
+            <li class="hotel-item">
+                <img src="{{ hotel.image.url }}" alt="{{ hotel.name }}">
+                <div class="hotel-details">
+                    <h3>{{ hotel.name }}</h3>
+                    <p>{{ hotel.description }}</p>
+                    <p>Rating: {{ hotel.rating }} / 5</p>
+                    <p>Starting from ${{ hotel.min_price_per_night }} per night</p>
+                    <a href="{% url 'room_list' hotel.id %}" class="details-button">View Rooms</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
